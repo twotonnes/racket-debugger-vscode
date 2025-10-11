@@ -15,37 +15,44 @@
   ],
   "main": "./dist/extension.js",
   "contributes": {
-    "debuggers": [{
-      "type": "racket",
-      "label": "Racket Debug",
-      "languages": ["racket"],
-      "configurationAttributes": {
-        "launch": {
-          "required": ["program", "debugServer"],
-          "properties": {
-            "program": {
-              "type": "string",
-              "description": "Absolute path to a Racket source file.",
-              "default": "${file}"
-            },
-            "debugServer": {
-              "type": "number",
-              "description": "Debug server port to connect to.",
-              "default": 4142
+    "debuggers": [
+      {
+        "type": "racket",
+        "label": "Racket Debug",
+        "languages": [
+          "racket"
+        ],
+        "configurationAttributes": {
+          "launch": {
+            "required": [
+              "program",
+              "debugServer"
+            ],
+            "properties": {
+              "program": {
+                "type": "string",
+                "description": "Absolute path to a Racket source file.",
+                "default": "${file}"
+              },
+              "debugServer": {
+                "type": "number",
+                "description": "Debug server port to connect to.",
+                "default": 4142
+              }
             }
           }
-        }
-      },
-      "initialConfigurations": [
-        {
-          "type": "racket",
-          "request": "launch",
-          "name": "Launch Racket Program",
-          "program": "${file}",
-          "debugServer": 4142
-        }
-      ]
-    }],
+        },
+        "initialConfigurations": [
+          {
+            "type": "racket",
+            "request": "launch",
+            "name": "Launch Racket Program",
+            "program": "${file}",
+            "debugServer": 4142
+          }
+        ]
+      }
+    ],
     "commands": [
       {
         "command": "racket-debugger.helloWorld",

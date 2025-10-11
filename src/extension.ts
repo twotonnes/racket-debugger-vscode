@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import * as net from 'net';
 
 /**
  * Debug adapter factory that creates debug adapter descriptors for TCP connections.
