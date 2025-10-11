@@ -2,19 +2,52 @@
   "name": "racket-debugger",
   "displayName": "Racket Debugger",
   "description": "Adds debugger support for Racket.",
+  "author": {
+    "name": "Twotonnes"
+  },
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.105.0"
   },
   "categories": [
-    "Other"
+    "Debuggers"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/twotonnes/racket-debugger-vscode"
+  },
   "activationEvents": [
-    "onDebug",
+    "onDebugResolve:racket",
+    "onDebugDynamicConfigurations:racket",
+    "onCommand:extension.racket-debugger.helloWorld",
     "onLanguage:racket"
   ],
   "main": "./dist/extension.js",
   "contributes": {
+    "menus": {
+      "editor/title/run": [
+        {
+          "command": "extension.racket-debug.runEditorContents",
+          "when": "resourceLangId == racket",
+          "group": "navigation@1"
+        },
+        {
+          "command": "extension.racket-debug.debugEditorContents",
+          "when": "resourceLangId == racket",
+          "group": "navigation@2"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "extension.racket-debug.debugEditorContents",
+          "when": "resourceLangId == racket"
+        },
+        {
+          "command": "extension.racket-debug.runEditorContents",
+          "when": "resourceLangId == racket"
+        }
+      ]
+    },
     "debuggers": [
       {
         "type": "racket",
@@ -22,6 +55,8 @@
         "languages": [
           "racket"
         ],
+        "program": "./dist/debugAdapter.js",
+        "runtime": "node",
         "configurationAttributes": {
           "launch": {
             "required": [
@@ -47,16 +82,48 @@
             "type": "racket",
             "request": "launch",
             "name": "Launch Racket Program",
-            "program": "${file}",
+            "program": "${command.AskForProgramName}",
             "debugServer": 4142
           }
-        ]
+        ],
+        "configurationSnippets": [
+          {
+            "label": "Racket Debug: Launch",
+            "description": "A new configuration for debugging a user selected Racket program.",
+            "body":
+            {
+              "type": "racket",
+              "request": "launch",
+              "name": "Launch Racket Program",
+              "program": "^\"\\${command:AskForProgramName}\"",
+              "debugServer": 4142
+            }
+          }
+        ],
+        "variables": {
+          "AskForProgramName": "extension.racket-debug.askForProgramName"
+        }
       }
     ],
     "commands": [
       {
-        "command": "racket-debugger.helloWorld",
-        "title": "Hello World"
+        "command": "extension.racket-debug.debugEditorContents",
+        "title": "Debug File",
+        "category": "Racket Debug",
+        "enablement": "!inDebugMode",
+        "icon": "$(debug-alt)"
+      },
+      {
+        "command": "extension.racket-debug.runEditorContents",
+        "title": "Run File",
+        "category": "Racket Debug",
+        "enablement": "!inDebugMode",
+        "icon": "$(play)"
+      }
+    ],
+    "breakpoints": [
+      {
+        "language": "racket"
       }
     ]
   },
