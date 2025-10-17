@@ -34,19 +34,13 @@
         "configurationAttributes": {
           "launch": {
             "required": [
-              "program",
-              "debugServerPort"
+              "program"
             ],
             "properties": {
               "program": {
                 "type": "string",
                 "description": "Absolute path to a Racket source file.",
                 "default": "${file}"
-              },
-              "debugServerPort": {
-                "type": "number",
-                "description": "Debug server port to connect to.",
-                "default": 4142
               }
             }
           }
@@ -56,8 +50,7 @@
             "type": "racket",
             "request": "launch",
             "name": "Launch Racket Program",
-            "program": "${file}",
-            "debugServer": 4142
+            "program": "${file}"
           }
         ]
       }
